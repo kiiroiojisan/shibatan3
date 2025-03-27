@@ -1,0 +1,9 @@
+<h2>管理者ページ</h2>
+<p>ようこそ、{{ session.username }} さん</p>
+<h3>登録ユーザー</h3>
+<ul>
+{% for user in users %}
+    <li>{{ user }} {% if failed_logins.get(user, {}).get("locked") %}🔒 ロック中{% endif %}</li>
+{% endfor %}
+</ul>
+<a href="{{ url_for('chat') }}">← チャットへ戻る</a>

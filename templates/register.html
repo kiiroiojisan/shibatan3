@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー登録</title>
+    <style>
+        body { font-family: sans-serif; max-width: 480px; margin: auto; padding: 20px; }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; }
+        .error { color: red; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>ユーザー登録</h1>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="ユーザー名" required />
+        <input type="password" name="password" placeholder="パスワード" required />
+        <button type="submit">登録</button>
+    </form>
+
+    <p><a href="{{ url_for('login') }}">ログイン画面に戻る</a></p>
+</body>
+</html>

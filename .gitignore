@@ -1,0 +1,11 @@
+.uploads/
+.env
+*.mp3
+*.wav
+*.m4a
+*.xlsx
+*.csv
+__pycache__/
+*.pyc
+.venv/
+venv/env

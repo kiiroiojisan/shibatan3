@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatGPT Webチャット</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+        .message { border-bottom: 1px solid #ccc; padding: 10px; }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th, .data-table td { border: 1px solid #ccc; padding: 5px; text-align: left; }
+        .file-preview img { max-width: 100%; margin-top: 10px; }
+        .logout { text-align: right; margin-bottom: 10px; }
+        .logout a { color: red; text-decoration: none; }
+    </style>
+</head>
+<body>
+<form method="POST" action="{{ url_for('reset_chat') }}">
+    <button type="submit" style="margin-top:10px; background-color:#f44336; color:white;">会話をリセット</button>
+</form>
+    <div class="logout">
+        <a href="{{ url_for('logout') }}">ログアウト</a>
+    </div>
+
+    <h1>柴たん専用フォーム</h1>
+
+    {% for msg in conversation %}
+        <div class="message">
+            <strong>{{ msg.role }}:</strong> {{ msg.content | safe }}
+        </div>
+    {% endfor %}
+
+    <!-- ✅ enctype が重要！ -->
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="user_input" placeholder="メッセージを入力..." style="width: 100%; padding: 10px;" />
+        <input type="file" name="file" accept="image/*" style="margin-top: 10px;" />
+        <button type="submit" style="margin-top: 10px;">送信</button>
+    </form>
+
+    {% if uploaded_filename and uploaded_filename.endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+        <div class="file-preview">
+            <p>画像プレビュー:</p>
+            <img src="/uploads/{{ unique_filename }}">
+        </div>
+    {% endif %}
+
+    {% if file_preview %}
+        <div class="file-preview">
+            <p>表データプレビュー:</p>
+            {{ file_preview | safe }}
+        </div>
+    {% endif %}
+
+    <p>{{ cost_info }}</p>
+</body>
+</html>

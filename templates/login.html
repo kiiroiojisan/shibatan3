@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン - 柴たん専用チャット</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            max-width: 480px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.6em;
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+        p {
+            text-align: center;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>柴たん専用ログイン</h1>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <label>ユーザー名：</label>
+        <input type="text" name="username" required>
+
+        <label>パスワード：</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">ログイン</button>
+    </form>
+    <p style="text-align: center;">
+        アカウントをお持ちでない方は <a href="{{ url_for('register') }}">新規登録</a>
+    </p>
+    <p><a href="{{ url_for('change_password') }}">パスワード変更</a></p>
+    {% if session.get("username") == "admin" %}
+    <p><a href="{{ url_for('admin_page') }}">管理者ページ</a></p>
+    {% endif %}
+</body>
+</html>
